@@ -4,12 +4,9 @@
 
 /** import the Finite State Machine */
 import { mainService } from './mainMachine.js';
-import TermScene2 from './scenes/TermScene2.js';
 
-const stage = new TermScene2('scene-container');
-stage.init();
-stage.start();
-
+/** import the stage and the initial world */
+// import Act1 from './stages/Act1.js';
 
 /**
  * connect to backend
@@ -40,19 +37,95 @@ const homebtn = document.querySelector('#homebtn');
 
 const termbtn = document.querySelector('#termbtn');
 
+// const fadeDuration = 1;
+
+/**
+ * create Global stage
+ */
+// const container = document.querySelector('#scene-container');
+// const stage = new Act1(container, {
+//   controller: { type: 'orbit' },
+//   debug: false,
+// });
+// stage.init();
+
 homebtn.onclick = () => {
   mainService.send({ type: 'HOME' });
 };
+// gsap.to(stage.overlayMaterial.uniforms.uAlpha, {
+//   duration: fadeDuration,
+//   value: 1,
+//   onComplete: () => mainService.send({ type: 'HOME' }),
+// });
+// };
 termbtn.onclick = () => {
   mainService.send({ type: 'TERM' });
 };
+
+/**
+ * concatenates state.value keys with final text value, assumes xState state.value
+ * like,
+ * home: { secondstage: 'bigpicture'} => homesecondstagebigpicture
+ * any state with a unique world must be listed in FSM subscription
+ */
+// eslint-disable-next-line no-unused-vars
+const parseState = stateValue => {
+  const header = [];
+  let childState = stateValue;
+  let loop = true;
+  while (loop) {
+    if (typeof childState === 'string' || childState instanceof String) {
+      header.push(childState);
+      loop = false;
+    } else {
+      const keys = Object.keys(childState);
+      const localKey = keys[0];
+      header.push(localKey);
+      childState = childState[localKey];
+    }
+  }
+
+  let startStr = '';
+  for (let i = 0; i < header.length; i += 1) {
+    const element = header[i];
+    startStr += element;
+  }
+  return startStr;
+};
+
 /**
  * subscribe to ui state
+ * lazy load world objects and initialize
  * change html element state
  *
  */
+let currentStateStr = null;
+
 mainService.subscribe(state => {
   homebtn.style.display = state.context.homebtn;
   termbtn.style.display = state.context.termbtn;
-});
 
+  // changing world, don't want to restart world if not changed
+  const stateStr = parseState(state.value);
+
+  if (stateStr !== currentStateStr) {
+    if (stateStr === 'home') {
+      import('./scenes/HomeScene.js').then(module => {
+        const stage = new module.default('scene-container');
+        stage.init();
+        stage.start();
+        console.log(stage);
+      });
+    }
+    if (stateStr === 'term') {
+      console.log('AAA');
+      import('./scenes/TermScene2.js').then(module => {
+        const stage = new module.default('scene-container');
+        stage.init();
+        stage.start();
+        console.log(stage);
+      });
+    }
+    currentStateStr = stateStr;
+  }
+});
