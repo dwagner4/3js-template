@@ -1,8 +1,7 @@
 /* eslint-disable no-param-reassign */
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { createCubeTextureLoader } from '../systems/Loader.js';
-import SceneThree from '../systems/SceneThree.js';
+import { createCubeTextureLoader, SceneThree } from '@dwagner4/3js-classes';
 
 import NorthTerminal from '../actors/NorthTerminal.js';
 import HeartScenery from '../scenery/HeartScenery.js';
@@ -17,7 +16,7 @@ export default class TermScene2 extends SceneThree {
 
     this.controls = new OrbitControls(this.camera, this.canvas);
     this.controls.enableDamping = true;
-  
+
     const hrtBgrd = new HeartScenery();
     this.hemi = hrtBgrd.hemilight;
     this.light = hrtBgrd.light;

@@ -1,5 +1,4 @@
-import { Actor } from '@dwagner4/3js-classes';
-import { createGlbLoader } from '../systems/Loader.js';
+import { Actor, createGlbLoader } from '@dwagner4/3js-classes';
 
 export default class NorthTerminal extends Actor {
   async init() {
@@ -8,8 +7,6 @@ export default class NorthTerminal extends Actor {
       glbloader.loadAsync('/assets/terminal_test2-yescomp-noanim.glb'),
     ]);
 
-    console.log(nTermData);
-
     const mymodel = nTermData.scene;
 
     const recursiveshadow = obj => {
@@ -17,7 +14,6 @@ export default class NorthTerminal extends Actor {
         // eslint-disable-next-line no-param-reassign
         obj.children[s].castShadow = true;
         if (obj.children[s].children.length > 0) {
-          console.log(s, obj.children[s]);
           recursiveshadow(obj.children[s]);
         }
       }
