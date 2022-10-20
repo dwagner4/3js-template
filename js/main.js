@@ -37,6 +37,8 @@ const homebtn = document.querySelector('#homebtn');
 
 const termbtn = document.querySelector('#termbtn');
 
+const caption = document.querySelector('#caption');
+
 // const fadeDuration = 1;
 
 /**
@@ -104,6 +106,7 @@ let currentStateStr = null;
 mainService.subscribe(state => {
   homebtn.style.display = state.context.homebtn;
   termbtn.style.display = state.context.termbtn;
+  caption.innerHTML = state.context.caption;
 
   // changing world, don't want to restart world if not changed
   const stateStr = parseState(state.value);
