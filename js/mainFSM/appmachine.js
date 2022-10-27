@@ -1,3 +1,6 @@
+// eslint-disable-next-line no-undef
+const { assign } = XState;
+
 const appmachine = {
   context: {},
   id: 'appMachine',
@@ -20,4 +23,19 @@ const appmachine = {
   },
 };
 
-export { appmachine };
+const appfunctions = {
+  actions: {
+    selecthome: assign({
+      homebtn: 'none',
+      termbtn: 'block',
+      caption: 'This is the Home Scene',
+    }),
+    selectterm: assign({
+      homebtn: 'block',
+      termbtn: 'none',
+      caption: 'Terminal Scene',
+    }),
+  },
+};
+
+export { appmachine, appfunctions };
