@@ -3,7 +3,7 @@
 // import { gsap } from 'gsap';
 
 /** import the Finite State Machine */
-import { mainService } from './mainMachine.js';
+import { mainService } from './mainFSM/mainMachine.js';
 
 /** import the stage and the initial world */
 // import Act1 from './stages/Act1.js';
