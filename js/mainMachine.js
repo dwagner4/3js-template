@@ -1,24 +1,72 @@
 // eslint-disable-next-line no-undef
 const { createMachine, interpret, assign } = XState;
 
+// const secondMachine = {
+//   id: 'secondMachine',
+//   initial: 'a',
+//   states: {
+//     a: {},
+//     b: {},
+//   }
+// }
+
+const appmachine = {
+  context: {},
+  id: 'appMachine',
+  initial: 'home',
+  states: {
+    home: {
+      entry: ['selecthome'],
+      on: {
+        HOME: { target: 'home' },
+        TERM: { target: 'term' },
+      },
+    },
+    term: {
+      entry: ['selectterm'],
+      on: {
+        HOME: { target: 'home' },
+        TERM: { target: 'term' },
+      },
+    },
+  },
+};
+
 const mainMachine = createMachine(
   {
     context: {},
     id: 'mainMachine',
-    initial: 'home',
+    initial: 'unauthenticated',
     states: {
-      home: {
-        entry: ['selecthome'],
+      unauthenticated: {
         on: {
-          HOME: { target: 'home' },
-          TERM: { target: 'term' },
+          LOGIN: { target: 'loading' },
         },
       },
-      term: {
-        entry: ['selectterm'],
+      loading: {
         on: {
-          HOME: { target: 'home' },
-          TERM: { target: 'term' },
+          CANCEL: { target: 'unauthenticated' },
+          ERROR: { target: 'error' },
+          SUCCESS: { target: 'authenticated' },
+        },
+      },
+      error: {
+        on: {
+          LOGIN: { target: 'loading' },
+          CANCEL: { target: 'unauthenticated' },
+        },
+      },
+      authenticated: {
+        on: {
+          EDITPROFILE: { target: 'editprofile' },
+          LOGOUT: { target: 'unauthenticated' },
+        },
+        ...appmachine,
+      },
+      editprofile: {
+        on: {
+          ERROR: { target: 'editprofile' },
+          SUCCESS: { target: 'authenticated' },
         },
       },
     },

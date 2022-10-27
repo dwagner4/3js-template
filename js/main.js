@@ -39,6 +39,11 @@ const termbtn = document.querySelector('#termbtn');
 
 const caption = document.querySelector('#caption');
 
+const loginbtn = document.querySelector('#loginbtn');
+const cancelbtn = document.querySelector('#cancelbtn');
+const successbtn = document.querySelector('#successbtn');
+const errorbtn = document.querySelector('#errorbtn');
+
 // const fadeDuration = 1;
 
 /**
@@ -62,6 +67,21 @@ homebtn.onclick = () => {
 // };
 termbtn.onclick = () => {
   mainService.send({ type: 'TERM' });
+};
+
+loginbtn.onclick = () => {
+  mainService.send({ type: 'LOGIN' });
+};
+
+cancelbtn.onclick = () => {
+  mainService.send({ type: 'CANCEL' });
+};
+
+successbtn.onclick = () => {
+  mainService.send({ type: 'SUCCESS' });
+};
+errorbtn.onclick = () => {
+  mainService.send({ type: 'ERROR' });
 };
 
 /**
@@ -106,7 +126,7 @@ let currentStateStr = null;
 mainService.subscribe(state => {
   homebtn.style.display = state.context.homebtn;
   termbtn.style.display = state.context.termbtn;
-  caption.innerHTML = state.context.caption;
+  caption.innerHTML = state.value;
 
   // changing world, don't want to restart world if not changed
   const stateStr = parseState(state.value);
