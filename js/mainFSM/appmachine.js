@@ -2,7 +2,7 @@
 const { assign } = XState;
 
 const appmachine = {
-  context: {},
+  context: { aaa: 'aaa' },
   id: 'appMachine',
   initial: 'home',
   states: {

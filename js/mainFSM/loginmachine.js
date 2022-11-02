@@ -1,6 +1,6 @@
 const loginmachine = {
   context: {},
-  id: 'mainMachine',
+  id: 'loginmachine',
   initial: 'unauthenticated',
   states: {
     unauthenticated: {

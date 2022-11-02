@@ -123,9 +123,12 @@ const parseState = stateValue => {
  */
 let currentStateStr = null;
 
+console.log(homebtn.style);
+
 mainService.subscribe(state => {
   homebtn.style.display = state.context.homebtn;
   termbtn.style.display = state.context.termbtn;
+  console.log(state);
   caption.innerHTML = state.value;
 
   // changing world, don't want to restart world if not changed

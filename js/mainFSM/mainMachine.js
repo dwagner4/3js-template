@@ -5,10 +5,12 @@ import { loginmachine } from './loginmachine.js';
 const { createMachine, interpret } = XState;
 
 /** add appmachine child fsm to the authenticated state of login */
-const mainfsm = loginmachine;
-let authstate = mainfsm.states.authenticated;
-authstate = { authstate, ...appmachine };
-mainfsm.states.authenticated = authstate;
+const mainfsm = {
+  id: 'mainfsm',
+  type: 'parallel',
+  context: {},
+  states: { login: loginmachine, app: appmachine },
+};
 
 // eslint-disable-next-line prefer-const
 let mainfunctions = appfunctions;
