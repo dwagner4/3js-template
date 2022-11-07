@@ -85,6 +85,12 @@ body {
   left: 3%;
 }
 
+#logoutbtn {
+  position: fixed;
+  top: 500px;
+  left: 3%;
+}
+
 
 #caption {
   color: var(--maximum-yellow-red);

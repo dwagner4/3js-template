@@ -43,6 +43,7 @@ const loginbtn = document.querySelector('#loginbtn');
 const cancelbtn = document.querySelector('#cancelbtn');
 const successbtn = document.querySelector('#successbtn');
 const errorbtn = document.querySelector('#errorbtn');
+const logoutbtn = document.querySelector('#logoutbtn');
 
 // const fadeDuration = 1;
 
@@ -82,6 +83,9 @@ successbtn.onclick = () => {
 };
 errorbtn.onclick = () => {
   mainService.send({ type: 'ERROR' });
+};
+logoutbtn.onclick = () => {
+  mainService.send({ type: 'LOGOUT' });
 };
 
 /**
